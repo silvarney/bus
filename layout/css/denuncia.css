@@ -1,0 +1,40 @@
+.box_cadastro{
+    padding-top: 3%;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.box_denuncia{
+    padding: 10%;
+}
+
+.box_multi{
+    padding: 5%;
+}
+
+li{
+    font-size: 22px;
+}
+label{
+    font-size: 18px;
+}
+
+.imagem_titulo{
+    background-color: #428bca;
+    color: #fff;
+    text-align: center;
+}
+
+#box_login{
+    margin-top: 5%;
+    margin-left: 30%;
+    margin-right: 30%;
+}
+
+#box_conteudo{
+    font-size: 22px;
+}
+
+#respota_denuncia{
+    padding-top: 15%; 
+}

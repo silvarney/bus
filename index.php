@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 require_once 'conexao/DB.php';
 ?>
@@ -133,7 +132,7 @@ if ($comando == "cadastro") {
             $stmt->bindParam(':senha', $senha);
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':tipo', $tipo);
-            return $stmt->execute();
+            $stmt->execute();
         } catch (Exception $ex) {
             echo 'Falha ao inserir usuário <br>';
             echo $ex->getMessage();
@@ -157,6 +156,7 @@ if ($comando == "cadastro") {
 
             $dados_login = $stmt->fetch(PDO::FETCH_OBJ);
 
+            $_SESSION['id'] = $dados_login->id_usuario;
             $_SESSION['nome'] = $dados_login->nome_usuario;
             $nivel = $dados_login->tipo_usuario;
 

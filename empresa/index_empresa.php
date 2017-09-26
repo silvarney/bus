@@ -1,5 +1,9 @@
 <?php
 require_once '../conexao/DB.php';
+require_once '../conexao/Crud.php';
+
+$mostrar_motorista = $motorista = Crud::ler_todos("motorista");
+$mostrar_cobrador = $cobrador = Crud::ler_todos("cobrador");
 ?>
 
 <script type="text/javascript">
@@ -17,10 +21,10 @@ require_once '../conexao/DB.php';
         <link href="../layout/css/denuncia.css" rel="stylesheet">
         <script src="../layout/js/bootstrap.min.js"></script>
         <script type="text/javascript">
-            $('#myTabs a').click(function (e) {
-                e.preventDefault()
-                $(this).tab('show')
-            });
+    $('#myTabs a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    });
         </script>
         <title></title>
     </head>
@@ -73,12 +77,13 @@ require_once '../conexao/DB.php';
                                     <div class="form-group ">
                                         <label for="selectMotorista" class="col-sm-2 control-label">Motorista</label>
                                         <div class="col-sm-10" id="selectMotorista">
-                                            <select class="form-control">
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
+                                            <select class="form-control" name="motoristaOnibus">
+                                                <option selected disabled="">Escolha um Motorista</option>
+                                                <?php
+                                                foreach ($mostrar_motorista as $linha_motorista) {
+                                                    echo "<option value=" . $linha_motorista->id_motorista . ">" . $linha_motorista->nome_motorista . "</option>";
+                                                }
+                                                ?>
                                             </select>
                                         </div>
                                     </div>
@@ -86,16 +91,17 @@ require_once '../conexao/DB.php';
                                     <div class="form-group ">
                                         <label for="selectCobrador" class="col-sm-2 control-label">Cobrador</label>
                                         <div class="col-sm-10" id="selectCobrador">
-                                            <select class="form-control">
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
+                                            <select class="form-control" name="cobradorOnibus">
+                                                <option selected disabled="">Escolha um Cobrador</option>
+                                                <?php
+                                                foreach ($mostrar_cobrador as $linha_cobrador) {
+                                                    echo "<option value=" . $linha_cobrador->id_cobrador . ">" . $linha_cobrador->nome_cobrador . "</option>";
+                                                }
+                                                ?>
                                             </select>
                                         </div>
                                     </div>
-                                    
+
                                     <input type="hidden" name="comando" value="cad_onibus">
                                     <input type="submit" class="btn btn-primary btn-lg btn-block" value="Salvar">
 
@@ -139,7 +145,7 @@ require_once '../conexao/DB.php';
                             <div class="panel-heading">CADASTRO - COBRADOR</div>
                             <div class="panel-body">
 
-                                <form class="form-horizontal box_multi" action="#" method="post">
+                                <form class="form-horizontal box_multi" action="" method="post">
 
                                     <div class="form-group ">
                                         <label for="inputNomeCobrador" class="col-sm-2 control-label">Nome</label>
@@ -223,17 +229,15 @@ if ($comando == "cad_motorista") {
             echo $ex->getMessage();
         }
     }
-    
+
     unset($_POST);
-    
 } elseif ($comando == "cad_onibus") {
 
 
     $placa_onibus = isset($_POST['placaOnibus']) ? $_POST['placaOnibus'] : '';
     $modelo_onibus = isset($_POST['modeloOnibus']) ? $_POST['modeloOnibus'] : '';
-    $id_cobrador = 1;
-    $id_motorista = 3;
-    
+    $id_motorista = isset($_POST['motoristaOnibus']) ? $_POST['motoristaOnibus'] : '';
+    $id_cobrador = isset($_POST['cobradorOnibus']) ? $_POST['cobradorOnibus'] : '';
     
     if ($placa_onibus && $modelo_onibus && $id_cobrador && $id_motorista) {
 
@@ -253,6 +257,6 @@ if ($comando == "cad_motorista") {
             echo $ex->getMessage();
         }
     }
-    
+
     unset($_POST);
 }

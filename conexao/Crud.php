@@ -29,6 +29,19 @@ abstract class Crud extends DB {
         }
 
     }
+    
+    public function denuncia_status($status) {
+        try {
+            $sql = "SELECT * FROM denuncia as d, linha as l where status_denuncia = '".$status."' and d.linha_id_linha = l.id_linha";
+            $stmt = DB::prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_OBJ);
+        } catch (Exception $exc) {
+            echo 'Falha ao ler todos os dados <br>';
+            echo $exc->getMessage();
+        }
+
+    }
 
     public function deletar($id, $tabela) {
         try {
